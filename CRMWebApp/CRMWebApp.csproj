@@ -14,6 +14,9 @@
     <None Include="Views\Main\Authentication\Login.cshtml" />
     <None Include="Views\Main\Authentication\Password.cshtml" />
     <None Include="Views\Main\Authentication\Register.cshtml" />
+    <None Include="wwwroot\lib\angular.js\angular.js" />
+    <None Include="wwwroot\lib\angular.js\angular.min.js" />
+    <None Include="wwwroot\lib\angular.js\angular.min.js.map" />
   </ItemGroup>
 
   <ItemGroup>
