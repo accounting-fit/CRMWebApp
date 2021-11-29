@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using CRMWebApp.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -32,7 +33,7 @@ namespace CRMWebApp.ApiControllers
             if (!ModelState.IsValid || userDetails == null)
             {
                 return new BadRequestObjectResult(new { Message = "User Registration Failed" });
-            }
+            }     
 
             var identityUser = new IdentityUser() { UserName = userDetails.UserName, Email = userDetails.Email };
             var result = await userManager.CreateAsync(identityUser, userDetails.Password);
@@ -86,6 +87,24 @@ namespace CRMWebApp.ApiControllers
 
             return Ok(new { Message = "You are logged in" });
         }
+
+        [HttpPost]
+        [Route("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordModel forgotPasswordModel)
+        {
+            if (!ModelState.IsValid || forgotPasswordModel == null)
+            {
+                return new BadRequestObjectResult(new { Message = "Forgot Password Fail" });
+            }
+            var user = await userManager.FindByEmailAsync(forgotPasswordModel.Email);
+            if (user == null)
+                return new BadRequestObjectResult(new { Message = "Email does not exist" });           
+            var callback = Url.Action("ResetPassword", "Authentication", new {email = user.Email });
+           
+            return Ok(new { Message = "Under Construction" });
+        }
+
+
 
         [HttpPost]
         [Route("Logout")]

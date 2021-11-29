@@ -20,5 +20,9 @@ namespace CRMWebApp.Controllers
         {
             return View("/Views/Main/Authentication/Register.cshtml");
         }
+        public IActionResult ForgotPassword()
+        {
+            return View("/Views/Main/Authentication/ForgotPassword.cshtml");
+        }
     }
 }
