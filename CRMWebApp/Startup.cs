@@ -44,12 +44,15 @@ namespace CRMWebApp
             })
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddDbContext<BusinessDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
                 {
                     options.SlidingExpiration = true;
                     options.ExpireTimeSpan = new TimeSpan(0, 1, 0);
-                });           
+                });
 
             services.AddControllers();
         }

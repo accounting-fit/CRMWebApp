@@ -12,6 +12,7 @@
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>-->
     <script src="~/assets/all.min.js"></script>
     <link href="~/lib/angular.js/angular-csp.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -50,7 +51,7 @@
                             Dashboard
                         </a>
 
-                        <a class="nav-link collapsed" href="#">
+                        <a class="nav-link collapsed" href="/Contact/Index">
                             <div class="sb-nav-link-icon"><i class="fas fa-address-book"></i></div>
                             Contacts
                         </a>
@@ -58,11 +59,11 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                             Leads
                         </a>
-                        <a class="nav-link collapsed" href="#">
+                        <a class="nav-link collapsed" href="/Event/Index">
                             <div class="sb-nav-link-icon"><i class="fas fa-search"></i></div>
                             Events
                         </a>
-                        <a class="nav-link collapsed" href="#">
+                        <a class="nav-link collapsed" href="/Task/Index">
                             <div class="sb-nav-link-icon"><i class="fas fa-bars"></i></div>
                             Tasks
                         </a>
@@ -126,11 +127,12 @@
     <script src="~/js/scripts.js"></script>
     @*<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>*@
     @*<script src="~/assets/demo/Chart.min.js"></script>
-    <script src="~/assets/demo/chart-area-demo.js"></script>
-    <script src="~/assets/demo/chart-bar-demo.js"></script>*@
+        <script src="~/assets/demo/chart-area-demo.js"></script>
+        <script src="~/assets/demo/chart-bar-demo.js"></script>*@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="~/js/datatables-simple-demo.js"></script>
     <script src="~/lib/angular.js/angular.js"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
