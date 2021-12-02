@@ -28,7 +28,7 @@
                         <th>Secondary Address</th>
                         <th>Description</th>
                         <th>Other Information</th>
-                        <th>Action</th>
+                        <th style="width:10%">Action</th>
 
                     </tr>
                 </thead>
@@ -69,8 +69,9 @@
                             <span class="table-data-font">{{item.other}}</span><br />
                         </td>
                         <td>
-                            <a href="/Contact/Edit/{{item.contact_id}}" class="btn btn-secondary" type="button"><i class="fas fa-edit"></i>&nbsp;Edit</a>
-                            <a href="/Contact/Delete/{{item.contact_id}}" class="btn btn-danger" type="button"><i class="fas fa-trash"></i>&nbsp;Delete</a>
+                            <a href="/Contact/Edit/{{item.contact_id}}" class="btn btn-secondary" type="button"><i class="fas fa-edit"></i></a>
+                        
+                            <a href="/Contact/Delete/{{item.contact_id}}" class="btn btn-danger" type="button"><i class="fas fa-trash"></i></a>
                         </td>
 
                     </tr>

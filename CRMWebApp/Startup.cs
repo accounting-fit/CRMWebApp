@@ -44,8 +44,8 @@ namespace CRMWebApp
             })
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddDbContext<BusinessDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
+            //services.AddDbContext<BusinessDbContext>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>

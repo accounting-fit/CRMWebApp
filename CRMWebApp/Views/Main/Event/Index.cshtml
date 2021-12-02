@@ -26,7 +26,7 @@
                         <th>Start Time</th>
                         <th>End Date</th>
                         <th>End Time</th>
-                        <th>Action</th>
+                        <th style="width:10%">Action</th>
                     </tr>
                 </thead>
 
@@ -45,20 +45,20 @@
                             <span class="table-data-font">{{item.des}}</span><br />
                         </td>
                         <td>
-                            <span class="table-data-font">{{item.start_date}}</span><br />
+                            <span class="table-data-font">{{item.start_date | date: 'dd/MMM/yyyy'}}</span><br />
                         </td>
                         <td>
-                            <span class="table-data-font">{{item.start_time}}</span><br />
+                            <span class="table-data-font">{{item.start_time | date: 'HH:mm a'}}</span><br />
                         </td>
                         <td>
-                            <span class="table-data-font">{{item.end_date}}</span><br />
+                            <span class="table-data-font">{{item.end_date | date: 'dd/MMM/yyyy'}}</span><br />
                         </td>
                         <td>
-                            <span class="table-data-font">{{item.end_time}}</span><br />
+                            <span class="table-data-font">{{item.end_time | date: 'HH:mm a'}}</span><br />
                         </td>
                         <td>
-                            <a href="/Event/Edit/{{item.event_id}}" class="btn btn-secondary" type="button"><i class="fas fa-edit"></i>&nbsp;Edit</a>
-                            <a href="/Event/Delete/{{item.event_id}}" class="btn btn-danger" type="button"><i class="fas fa-trash"></i>&nbsp;Delete</a>
+                            <a href="/Event/Edit/{{item.event_id}}" class="btn btn-secondary" type="button"><i class="fas fa-edit"></i></a>
+                            <a href="/Event/Delete/{{item.event_id}}" class="btn btn-danger" type="button"><i class="fas fa-trash"></i></a>
                         </td>
 
                     </tr>

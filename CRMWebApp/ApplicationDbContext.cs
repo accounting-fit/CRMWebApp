@@ -21,16 +21,16 @@ namespace CRMWebApp
 
     }
 
-    public class BusinessDbContext : DbContext
-    {
-        public BusinessDbContext(DbContextOptions<BusinessDbContext> options) : base(options)
-        {
+    //public class BusinessDbContext : DbContext
+    //{
+    //    public BusinessDbContext(DbContextOptions<BusinessDbContext> options) : base(options)
+    //    {
 
-        }
+    //    }
 
-        public DbSet<contacts> contacts { get; set; }
-        public DbSet<tasks> tasks { get; set; }
-        public DbSet<events> events { get; set; }
+    //    public DbSet<contacts> contacts { get; set; }
+    //    public DbSet<tasks> tasks { get; set; }
+    //    public DbSet<events> events { get; set; }
        
-    }
+    //}
 }

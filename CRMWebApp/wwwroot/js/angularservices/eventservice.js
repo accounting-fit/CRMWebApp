@@ -42,5 +42,40 @@
             }, function (response) {
                 console.log(response);
             });
-        }        
+        }
+
+
+        $scope.Save = function (isClose) {
+
+            var model = $scope.model;
+
+            var url = '/Api/Event/Save';
+            $http({
+                method: 'POST',
+                url: url,
+                data: model
+            }).then(function (response) {
+                if (response.status === 200) {
+                    if (response.data.ok) {
+                        $scope.AllClear();
+                        alert("Save Successfully")
+                        if (isClose === 1) {
+                            window.location.href = "/Event/Index";
+                        }
+                        else {
+                            window.location.href = "/Event/Create";
+                        }
+                    } else {
+                        console.log(response);
+                        alert("Save Failed")
+                    }
+                } else {
+                    console.log(response);
+                    alert("Something  wrong")
+                }
+
+            }, function (response) {
+                console.log(response);
+            });
+        }
     });
