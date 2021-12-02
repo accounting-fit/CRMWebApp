@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewData["Title"] = "Add New Lead";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card" ng-app="CRMApp"  ng-controller="LeadController" ng-init="OnInit()">
+    <form name="frm">
+        <div class="card-body">
+            <div class="shadow rounded">
+                <div class="title text-left w-100 pt-2 text-dark font-weight-bolder">Add New Lead</div>
+                <hr class="border-bottom-light mb-0" />
+                <div class="p-2">
+                    <div class="row">
+                        <div class="title text-left w-100 pt-2 text-dark font-weight-bolder"> General Information</div>
+                        <hr class="border-bottom-light mb-0" />
+                        <div class="col-6 mb-2">
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="fname">First Name <span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
+                                <input ng-model="model.fname" placeholder="" type="text" class="form-control form-control-sm" id="fname" name="fname" required />
+                                <span ng-show="frm.fname.$touched && frm.fname.$invalid" style="color:red">First Name is required.</span>
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="lname">Last Name <span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
+                                <input ng-model="model.lname" placeholder="" type="text" class="form-control form-control-sm" id="lname" name="lname" required />
+                                <span ng-show="frm.lname.$touched && frm.lname.$invalid" style="color:red">Last Name is required.</span>
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="mname">Middle Name </label>
+                                <input ng-model="model.mname" placeholder="" type="text" class="form-control form-control-sm" id="mname" name="mname" />
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="sales_person">Sale Person </label>
+                                <input ng-model="model.sales_person" placeholder="" type="text" class="form-control form-control-sm" id="sales_person" name="sales_person" />
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="dep">Department</label>
+                                <input ng-model="model.dep" placeholder="" type="text" class="form-control form-control-sm" id="dep" name="dep" />
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="comp">Company </label>
+                                <input ng-model="model.comp" placeholder="" type="text" class="form-control form-control-sm" id="comp" name="comp" />
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="industry">Industry</label>
+                                <input ng-model="model.industry" placeholder="" type="text" class="form-control form-control-sm" id="industry" name="industry" />
+                            </div>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="lead_source">Lead Source<span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
+                                <select ng-model="model.lead_source" class="form-control form-control-sm" id="lead_source" name="lead_source" required>
+                                    <option ng-repeat="item in lead_sourceList" value="{{item.id}}">{{item.text}}</option>
+                                </select>
+                                <span ng-show="frm.lead_source.$touched && frm.lead_source.$invalid" style="color:red">Lead Source is required.</span>
+                            </div>
+
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="type">Lead Status<span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
+                                <select ng-model="model.lead_status" class="form-control form-control-sm" id="lead_status" name="lead_status" required>
+                                    <option ng-repeat="item in lead_statusList" value="{{item.id}}">{{item.text}}</option>
+                                </select>
+                                <span ng-show="frm.lead_status.$touched && frm.lead_status.$invalid" style="color:red">Lead Status is required.</span>
+                            </div>
+
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="no_empl">No of Employees</label>
+                                <input ng-model="model.no_empl" placeholder="" type="number" class="form-control form-control-sm" id="no_empl" name="no_empl" />
+                            </div>
+
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="revenue">Revenue</label>
+                                <input ng-model="model.revenue" placeholder="" type="text" class="form-control form-control-sm" id="revenue" name="revenue" />
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="des">Description </label>
+                                <textarea ng-model="model.des" placeholder="" type="text" class="form-control form-control-sm" id="des" name="des"></textarea>
+                            </div>
+
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="referred">Referred By</label>
+                                <input ng-model="model.referred" placeholder="" type="text" class="form-control form-control-sm" id="referred" name="referred" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="title text-left w-100 pt-2 text-dark font-weight-bolder"> Contact Information</div>
+                        <hr class="border-bottom-light mb-0" />
+                        <div class="col-6 mb-2">
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="repositoryName">Email </label>
+                                <input ng-model="model.email" placeholder="" type="email" class="form-control form-control-sm" id="email" name="email" />
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="repositoryName">Mobile </label>
+                                <input ng-model="model.mobile" placeholder="" type="text" class="form-control form-control-sm" id="mobile" name="mobile" />
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="repositoryName">Phone</label>
+                                <input ng-model="model.phone" placeholder="" type="text" class="form-control form-control-sm" id="phone" name="phone" />
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="repositoryName">Website</label>
+                                <input ng-model="model.website" placeholder="" type="text" class="form-control form-control-sm" id="website" name="website" />
+                            </div>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <div class="col-12 mb-2">
+                                <div class="col-12 mb-2">
+                                    <label class="control-label text-sm-left text-dark font-weight-bolder" for="des"> Address 1 </label>
+                                    <textarea ng-model="model.address1" placeholder="" type="text" class="form-control form-control-sm" id="address1" name="address1"></textarea>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label class="control-label text-sm-left text-dark font-weight-bolder" for="des"> Address 2 </label>
+                                    <textarea ng-model="model.address2" placeholder="" type="text" class="form-control form-control-sm" id="address2" name="address2"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="row">                     
+                                <div class="title text-left w-100 pt-2 text-dark font-weight-bolder"> Adddtional Information</div>
+                                <hr class="border-bottom-light mb-0" />
+                                <div class="col-6 mb-2">
+                                    <label class="control-label text-sm-left text-dark font-weight-bolder" for="des">Other Information </label>
+                                    <textarea ng-model="model.other" placeholder="" type="text" class="form-control form-control-sm" id="other" name="other"></textarea>
+                                </div>                          
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-right" align="right">
+            <button type="button" ng-click="Save(0)" ng-disabled="frm.$invalid" class="btn btn-sm btn-primary"><i class="fas fa-save"></i> &nbsp;Save</button>
+            <button type="button" ng-click="Save(1)" ng-disabled="frm.$invalid" class="btn btn-sm btn-primary"><i class="fas fa-save"></i> &nbsp;Save & Exit</button>
+            <a href="/Lead/Index" class="btn btn-sm btn-danger"><i class="fas fa-times-circle"></i> &nbsp;Cancel</a>
+        </div>
+    </form>
+
+</div>
+
+<script src="~/lib/angular.js/angular.js"></script>
+    <script src="~/js/angularservices/leadservice.js"></script>
+

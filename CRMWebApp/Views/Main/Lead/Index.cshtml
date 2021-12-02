@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewData["Title"] = "Lead List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<div class="card" ng-app="CRMApp" ng-controller="LeadController" ng-init="GetAll()">
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Lead</h1>
+        <div class="row">
+            <div class="col-6 pr-3 pl-3 text-right">
+                <a href="/Lead/Create" class="btn btn-success" type="button"><i class="fas fa-plus-circle"></i>&nbsp;Add</a>
+                <button title="Export To Excel" ng-click="ExportToExcel()" class="btn btn-primary" type="button"><i class="fas fa-file-excel"></i>&nbsp;Export</button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Middle Name</th>
+                        <th>Sales Person</th>
+                        <th>Department</th>
+                        <th>Company</th>
+                        <th>Industry</th>
+                        <th>Lead Source</th>
+                        <th>Lead Status</th>
+                        <th>No of Employees</th>
+                        <th>Revenue</th>
+                        <th>Description</th>
+                        <th>Referred By</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Phone</th>
+                        <th>Website</th>
+                        <th>Address1</th>
+                        <th>Address2</th>                       
+                        <th>Other</th>
+                        <th style="width:20%">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody style="background-color:white;">
+                    <tr ng-repeat="item in AllDataList">
+                        <td>
+                            <span class="table-data-font">{{item.fname}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.lname}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.mname}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.fname}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.dep}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.comp}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.industry}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.lead_source}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.lead_status}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.no_empl}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.revenue}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.des}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.referred}}</span><br />
+                        </td>              
+
+                        <td>
+                            <span class="table-data-font">{{item.email}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.mobile}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.phone}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.website}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.address1}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.address2}}</span><br />
+                        </td>                     
+                        <td>
+                            <span class="table-data-font">{{item.other}}</span><br />
+                        </td>
+                        <td>
+                            <a href="/Lead/Edit/{{item.lead_id}}" class="btn btn-secondary" type="button"><i class="fas fa-edit"></i></a>
+
+                            <a href="/Lead/Delete/{{item.lead_id}}" class="btn btn-danger" type="button"><i class="fas fa-trash"></i></a>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="19" class="text-right" style=" padding-top: 1rem;">
+                            <span>Rows per page:</span>
+                            <select>
+                                <option>10</option>
+                                <option>25</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
+                        </td>
+                        <td class="text-right" style=" padding-top: 1rem;">
+                            1-10 of 276
+                        </td>
+                        <td class="text-right">
+                            <button type="button" class="btn btn-flat btn-xs bg-transparent">
+                                <i class="fas fa-angle-left mr-3"></i>
+                            </button>
+                            <button type="button" class="btn btn-flat btn-xs bg-transparent">
+                                <i class="fas fa-angle-right"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="~/lib/angular.js/angular.js"></script>
+<script src="~/js/angularservices/leadservice.js"></script>
+
+
