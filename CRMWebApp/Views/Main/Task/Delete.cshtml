@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Delete Task";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="delete" ng-app="CRMApp" ng-controller="TaskController">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete Record ?</div>
+
+            </div>
+            <div class="modal-footer ">
+                <button type="button" ng-click="DeleteById('@ViewBag.Id')" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> &nbsp;Delete</button>
+                <a href="/Task/Index" class="btn btn-sm btn-dark"><i class="fas fa-close"></i> &nbsp;Cancel</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="~/lib/angular.js/angular.js"></script>
+<script src="~/js/angularservices/taskservice.js"></script>

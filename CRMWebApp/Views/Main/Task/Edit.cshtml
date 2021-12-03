@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "Update Task";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<div class="card" ng-app="CRMApp" ng-controller="TaskController" ng-init="GetById('@ViewBag.Id')">
+    <form name="frm">
+        <div class="card-body">
+            <div class="shadow rounded">
+                <div class="title text-left w-100 pt-2 text-dark font-weight-bolder" align="left">Update Task</div>
+                <hr class="border-bottom-light mb-0" />
+                <div class="p-2">
+                    <div class="row">                    
+                        <div class="col-12 mb-2">
+                            <label class="control-label text-sm-left text-dark font-weight-bolder" for="task_name">Task<span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
+                            <input ng-model="model.task_name" placeholder="" type="text" class="form-control form-control-sm" id="task_name" name="task_name" required />
+                            <span ng-show="frm.task_name.$touched && frm.task_name.$invalid" style="color:red">Task  is required.</span>
+                        </div>
+
+                        <div class="col-12 mb-2">
+                            <label class="control-label text-sm-left text-dark font-weight-bolder" for="status">Status<span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
+                            <select ng-model="model.status" class="form-control form-control-sm" id="status" name="status" required>
+                                <option ng-repeat="item in statusList" value="{{item.id}}">{{item.text}}</option>
+                            </select>
+                            <span ng-show="frm.status.$touched && frm.status.$invalid" style="color:red">Status is required.</span>
+                        </div>
+
+                        <div class="col-12 mb-2">
+                            <label class="control-label text-sm-left text-dark font-weight-bolder" for="type">Refer To Type <span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
+                            <select ng-model="model.refer_type" class="form-control form-control-sm" id="refer_type" name="refer_type" required>
+                                <option ng-repeat="item in refer_typeList" value="{{item.id}}">{{item.text}}</option>
+                            </select>
+                            <span ng-show="frm.refer_type.$touched && frm.refer_type.$invalid" style="color:red">Refer To Type is required.</span>
+                        </div>
+
+                        <div class="col-12 mb-2">
+                            <label class="control-label text-sm-left text-dark font-weight-bolder" for="refer_name">Refer To Name <span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
+                            <input ng-model="model.refer_name" placeholder="" type="text" class="form-control form-control-sm" id="refer_name" name="refer_name" required />
+                            <span ng-show="frm.refer_name.$touched && frm.refer_name.$invalid" style="color:red">Refer To Name is required.</span>
+                        </div>
+
+
+                        <div class="col-12 mb-2">
+                            <label class="control-label text-sm-left text-dark font-weight-bolder" for="priority">Priority </label>
+                            <input ng-model="model.priority" placeholder="" type="text" class="form-control form-control-sm" id="priority" name="priority" />
+                        </div>
+
+                        <div class="col-12 mb-2">
+                            <label class="control-label text-sm-left text-dark font-weight-bolder" for="des">Description </label>
+                            <textarea ng-model="model.des" placeholder="" type="text" class="form-control form-control-sm" id="des" name="des"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-right" align="right">            
+            <button type="button" ng-click="Update()" ng-disabled="frm.$invalid" class="btn btn-sm btn-primary"><i class="fas fa-save"></i> &nbsp;Update & Exit</button>
+            <a href="/Task/Index" class="btn btn-sm btn-danger"><i class="fas fa-times-circle"></i> &nbsp;Cancel</a>
+        </div>
+    </form>
+
+</div>
+<script src="~/lib/angular.js/angular.js"></script>
+<script src="~/js/angularservices/taskservice.js"></script>

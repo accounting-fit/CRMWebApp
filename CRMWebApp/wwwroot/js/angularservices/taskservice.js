@@ -78,4 +78,93 @@
                 console.log(response);
             });
         }
+
+        $scope.GetById = function (id) {
+            var url = '/Api/Task/GetById/' + id;
+            $http({
+                method: 'GET',
+                url: url,
+            }).then(function (response) {
+                console.log(response);
+                if (response.status === 200) {
+                    var data = response.data;                    
+                    $scope.model.task_id = data.singleData.task_id;
+                    $scope.model.task_name = data.singleData.task_name;
+                    $scope.model.status = data.singleData.status;
+                    $scope.model.refer_type = data.singleData.refer_type;
+                    $scope.model.refer_name = data.singleData.refer_name;
+                    $scope.model.priority = data.singleData.priority;
+                    $scope.model.des = data.singleData.des;
+                }          
+                
+            }, function (response) {
+                console.log(response);
+            });
+        }
+
+        $scope.Update = function (isClose) {
+
+            var model = $scope.model;
+
+            var url = '/Api/Task/Update';
+            $http({
+                method: 'POST',
+                url: url,
+                data: model
+            }).then(function (response) {
+                if (response.status === 200) {
+                    if (response.data.ok) {
+                        $scope.AllClear();
+                        alert("Update Successfully")                       
+                            window.location.href = "/Task/Index";                    
+                        }
+                     else {
+                        console.log(response);
+                        alert("Update Failed")
+                    }
+                } else {
+                    console.log(response);
+                    alert("Something  wrong")
+                }
+
+            }, function (response) {
+                console.log(response);
+            });
+        }
+
+
+
+
+        $scope.DeleteById = function (id) {
+            debugger;
+
+            var url = '/Api/Task/DeleteById/' + id;
+            $http({
+                method: 'POST',
+                url: url
+            }).then(function (response) {
+                if (response.status === 200) {
+                    if (response.data.ok) {
+                        $scope.AllClear();
+                        alert("Delete Successfully")                       
+                            window.location.href = "/Task/Index";                  
+                       
+                    } else {
+                        console.log(response);
+                        alert("Delete Failed")
+                    }
+                } else {
+                    console.log(response);
+                    alert("Something  wrong")
+                }
+
+            }, function (response) {
+                console.log(response);
+            });
+        }
+
+        $scope.ExportToExcel = function () {
+            var url = '/Api/Task/ExportExcel';
+            window.open(url, '_blank');
+        }
     });

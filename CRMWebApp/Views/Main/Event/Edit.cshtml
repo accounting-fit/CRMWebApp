@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewData["Title"] = "Edit Event";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card" ng-app="CRMApp" ng-controller="EventController" ng-init="GetById('@ViewBag.Id')">
+    <form name="frm">
+        <div class="card-body">
+            <div class="shadow rounded">
+                <div class="title text-left w-100 pt-2 text-dark font-weight-bolder" alignment="left" >Edit Event</div>
+                <hr class="border-bottom-light mb-0" />
+                <div class="p-2">
+                    <div class="row">
+                        <div class="col-8 mb-2">
+                            <label class="control-label  text-sm-left text-dark font-weight-bolder" for="topic">Topic<span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
+                            <input ng-model="model.topic" placeholder="" type="text" class="form-control form-control-sm" id="topic" name="topic" required />
+                            <span ng-show="frm.topic.$touched && frm.topic.$invalid" style="color:red">Topic  is required.</span>
+                        </div>
+
+                        <div class="col-8 mb-2">
+                            <label class="control-label text-sm-left text-dark font-weight-bolder" for="type">Type <span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
+                            <select ng-model="model.type" class="form-control form-control-sm" id="type" name="type" required>
+                                <option ng-repeat="item in typeList" value="{{item.id}}">{{item.text}}</option>
+                            </select>
+                            <span ng-show="frm.type.$touched && frm.type.$invalid" style="color:red">Type is required.</span>
+                        </div>
+
+                        <div class="col-8 mb-2">
+                            <label class="control-label text-sm-left text-dark font-weight-bolder" for="status">Status<span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
+                            <select ng-model="model.status" class="form-control form-control-sm" id="status" name="status" required>
+                                <option ng-repeat="item in statusList" value="{{item.id}}">{{item.text}}</option>
+                            </select>
+                            <span ng-show="frm.status.$touched && frm.status.$invalid" style="color:red">Status is required.</span>
+                        </div>
+
+
+                        <label class="control-label text-sm-left text-dark font-weight-bolder" for="start_date">Start </label>
+                        <div class="col-8 mb-2">
+                            <input ng-model="model.start_date" placeholder="" type="date" class="form-control form-control-sm" id="start_date" name="start_date" />
+                        </div>
+
+                        <div class="col-4 mb-2">
+                            <input ng-model="model.start_time" placeholder="" type="time" class="form-control form-control-sm" id="start_time" name="start_time" />
+                        </div>
+
+
+                        <label class="control-label text-sm-left text-dark font-weight-bolder" for="end_date">End </label>
+                        <div class="col-8 mb-2">
+                            <input ng-model="model.end_date" placeholder="" type="date" class="form-control form-control-sm" id="end_date" name="end_date" />
+                        </div>
+
+                        <div class="col-4 mb-2">
+                            <input ng-model="model.end_time" placeholder="" type="time" class="form-control form-control-sm" id="end_time" name="end_time" />
+                        </div>
+
+                        <div class="col-12 mb-2">
+                            <label class="control-label text-sm-left text-dark font-weight-bolder" for="des">Description </label>
+                            <textarea ng-model="model.des" placeholder="" type="text" class="form-control form-control-sm" id="des" name="des"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-right">           
+            <button type="button" ng-click="Update(1)" ng-disabled="frm.$invalid" class="btn btn-sm btn-primary"><i class="fas fa-save"></i> &nbsp;Save & Exit</button>
+            <a href="/Event/Index" class="btn btn-sm btn-danger"><i class="fas fa-times-circle"></i> &nbsp;Cancel</a>
+        </div>
+    </form>
+
+</div>
+<script src="~/lib/angular.js/angular.js"></script>
+<script src="~/js/angularservices/eventservice.js"></script>

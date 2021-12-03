@@ -17,5 +17,19 @@ namespace CRMWebApp.Controllers
         {
             return View("/Views/Main/Lead/Create.cshtml");
         }
+
+        public IActionResult Edit(string id)
+        {
+            ViewData["Action"] = "Edit Lead";
+            ViewBag.Id = id;
+            return View("/Views/Main/Lead/Edit.cshtml");
+        }
+
+        public IActionResult Delete(string id)
+        {
+            ViewData["Action"] = "Delete Lead";
+            ViewBag.Id = id;
+            return View("/Views/Main/Lead/Delete.cshtml");
+        }
     }
 }
