@@ -5,15 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Main\Authentication\ForgotPassword.cshtml" />
-    <Content Remove="Views\Main\Authentication\login.cshtml" />
-    <Content Remove="Views\Main\Authentication\register.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\Main\Authentication\Login.cshtml" />
-    <None Include="Views\Main\Authentication\ForgotPassword.cshtml" />
-    <None Include="Views\Main\Authentication\Register.cshtml" />
     <None Include="wwwroot\lib\angular.js\angular.js" />
     <None Include="wwwroot\lib\angular.js\angular.min.js" />
     <None Include="wwwroot\lib\angular.js\angular.min.js.map" />
