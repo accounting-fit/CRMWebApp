@@ -110,7 +110,7 @@
                     var data = response.data;
                     $scope.model.event_id = data.singleData.event_id;
                     $scope.model.topic = data.singleData.topic;
-                    $scope.model.contact_id = data.singleData.contact_id;
+                    $scope.model.contact_id = (data.singleData.contact_id).toString();
                     $scope.model.type = data.singleData.type;
                     $scope.model.status = data.singleData.status;
                     $scope.model.des = data.singleData.des;

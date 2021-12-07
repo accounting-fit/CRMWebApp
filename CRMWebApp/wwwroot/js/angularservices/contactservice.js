@@ -89,7 +89,7 @@
                     $scope.model.website = data.singleData.website
                     $scope.model.address1 = data.singleData.address1
                     $scope.model.address2 = data.singleData.address2
-                    $scope.model.type = data.singleData.type;
+                    $scope.model.type = (data.singleData.type).toString();
                     $scope.model.des = data.singleData.des
                     $scope.model.other = data.singleData.other                   
                 }

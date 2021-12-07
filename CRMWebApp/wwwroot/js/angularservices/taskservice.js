@@ -113,7 +113,7 @@
                     $scope.model.task_name = data.singleData.task_name;
                     $scope.model.status = data.singleData.status;
                     $scope.model.refer_type = data.singleData.refer_type;
-                    $scope.model.assigned_to = data.singleData.assigned_to;
+                    $scope.model.assigned_to = (data.singleData.assigned_to).toString();
                     $scope.model.priority = data.singleData.priority;
                     $scope.model.des = data.singleData.des;
                 }          

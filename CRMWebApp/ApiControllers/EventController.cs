@@ -181,7 +181,7 @@ namespace CRMWebApp.ApiControllers
                                                      WHERE event_id=@event_id;";
 
              updateQuery += @"UPDATE [dbo].[customerEvent]
-                                                     SET [contact_id] = contact_id                                                         
+                                                     SET [contact_id] = @contact_id                                                         
                                                      WHERE event_id=@event_id";
             using (var con = new SqlConnection(GlobalClass.ConnectionString))
             {
