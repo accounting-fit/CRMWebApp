@@ -26,6 +26,7 @@
                         <th>Website</th>
                         <th>Primary Address</th>
                         <th>Secondary Address</th>
+                        <th>Type</th>
                         <th>Description</th>
                         <th>Other Information</th>
                         <th style="width:10%">Action</th>
@@ -63,6 +64,9 @@
                             <span class="table-data-font">{{item.address2}}</span><br />
                         </td>
                         <td>
+                            <span class="table-data-font">{{item.type==false?'Customer':'Employee'}}</span><br />
+                        </td>
+                        <td>
                             <span class="table-data-font">{{item.des}}</span><br />
                         </td>
                         <td>
@@ -70,7 +74,7 @@
                         </td>
                         <td>
                             <a href="/Contact/Edit/{{item.contact_id}}" class="btn btn-secondary" type="button"><i class="fas fa-edit"></i></a>
-                        
+
                             <a href="/Contact/Delete/{{item.contact_id}}" class="btn btn-danger" type="button"><i class="fas fa-trash"></i></a>
                         </td>
 
@@ -79,7 +83,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="10" class="text-right" style=" padding-top: 1rem;">
+                        <td colspan="11" class="text-right" style=" padding-top: 1rem;">
                             <span>Rows per page:</span>
                             <select>
                                 <option>10</option>

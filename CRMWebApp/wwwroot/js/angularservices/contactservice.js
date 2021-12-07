@@ -1,7 +1,13 @@
 ﻿angular.module('CRMApp', []).
     controller('ContactController', function ($scope, $timeout, $http, $location, $window) {
         $scope.model = {                        
-        };       
+        };
+
+        var typeList = [
+             { id: false, text: "Customer" }
+            , { id: true, text: "Employee" }
+        ]
+        $scope.typeList = typeList;       
 
         $scope.AllClear = function () {
             $scope.model = {
@@ -31,6 +37,7 @@
         $scope.Save = function (isClose) {
 
             var model = $scope.model;
+            model.type = model.type == 'true'? true:false;
 
             var url = '/Api/Contact/Save';
             $http({
@@ -82,8 +89,9 @@
                     $scope.model.website = data.singleData.website
                     $scope.model.address1 = data.singleData.address1
                     $scope.model.address2 = data.singleData.address2
+                    $scope.model.type = data.singleData.type;
                     $scope.model.des = data.singleData.des
-                    $scope.model.other = data.singleData.other
+                    $scope.model.other = data.singleData.other                   
                 }
 
             }, function (response) {
@@ -91,9 +99,10 @@
             });
         }
 
-        $scope.Update = function (isClose) {
+        $scope.Update = function () {
 
             var model = $scope.model;
+            model.type = model.type == 'true' ? true : false;
 
             var url = '/Api/Contact/Update';
             $http({

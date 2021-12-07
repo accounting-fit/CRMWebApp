@@ -9,6 +9,27 @@
                           };
         }
 
+
+        GetAllContacts('0');
+
+        function GetAllContacts(type) {
+            var url = '/Api/Contact/GetAllContacts/' + type;
+            $http({
+                method: 'GET',
+                url: url,
+            }).then(function (response) {
+                console.log(response);
+                if (response.status === 200) {
+                    var data = response.data;
+                    debugger;
+                    $scope.contact_id_list = data.getAllContacts;
+                }
+
+            }, function (response) {
+                console.log(response);
+            });
+        }
+
         var typeList = [
             { id: "Call", text: "Call" }
             , { id: "Conference", text: "Conference" }
@@ -89,6 +110,7 @@
                     var data = response.data;
                     $scope.model.event_id = data.singleData.event_id;
                     $scope.model.topic = data.singleData.topic;
+                    $scope.model.contact_id = data.singleData.contact_id;
                     $scope.model.type = data.singleData.type;
                     $scope.model.status = data.singleData.status;
                     $scope.model.des = data.singleData.des;
@@ -103,7 +125,7 @@
             });
         }
 
-        $scope.Update = function (isClose) {
+        $scope.Update = function () {
 
             var model = $scope.model;
 

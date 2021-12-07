@@ -12,12 +12,33 @@
                           ]
         $scope.statusList = statusList;
 
+
         var refer_typeList = [
               { id: "Account", text: "Account" }
             , { id: "Contact", text: "Contact" }
             , { id: "Lead", text: "Lead" }
                  ]
         $scope.refer_typeList = refer_typeList;
+     
+        GetAllContacts('1');
+
+        function GetAllContacts(type) {
+            var url = '/Api/Contact/GetAllContacts/' + type;
+            $http({
+                method: 'GET',
+                url: url,
+            }).then(function (response) {
+                console.log(response);
+                if (response.status === 200) {
+                    var data = response.data;
+                    debugger;
+                    $scope.assigned_to_list = data.getAllContacts;
+                }
+
+            }, function (response) {
+                console.log(response);
+            });
+        }
 
         $scope.AllClear = function () {
             $scope.model = {
@@ -87,12 +108,12 @@
             }).then(function (response) {
                 console.log(response);
                 if (response.status === 200) {
-                    var data = response.data;                    
+                    var data = response.data;   
                     $scope.model.task_id = data.singleData.task_id;
                     $scope.model.task_name = data.singleData.task_name;
                     $scope.model.status = data.singleData.status;
                     $scope.model.refer_type = data.singleData.refer_type;
-                    $scope.model.refer_name = data.singleData.refer_name;
+                    $scope.model.assigned_to = data.singleData.assigned_to;
                     $scope.model.priority = data.singleData.priority;
                     $scope.model.des = data.singleData.des;
                 }          
@@ -102,7 +123,7 @@
             });
         }
 
-        $scope.Update = function (isClose) {
+        $scope.Update = function () {
 
             var model = $scope.model;
 
@@ -162,6 +183,9 @@
                 console.log(response);
             });
         }
+
+
+
 
         $scope.ExportToExcel = function () {
             var url = '/Api/Task/ExportExcel';

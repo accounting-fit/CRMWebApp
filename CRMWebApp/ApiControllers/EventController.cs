@@ -40,7 +40,12 @@ namespace CRMWebApp.ApiControllers
         [Route("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            string SelectedAllDataQuery = @"SELECT * FROM [events] ORDER BY event_id Desc";
+            string SelectedAllDataQuery = @"select e.*
+                                        ,ce.contact_id
+                                        ,ISNULL(c.fname,'')+' '+ISNULL(c.mname,'')+' '+ISNULL(c.lname,'') as contact_name 
+                                        from [events] e 
+                                        left join  [customerEvent] ce on e.event_id=ce.event_id
+                                        left join [contacts] c on ce.contact_id=c.contact_id ORDER BY event_id Desc";
             using (var con = new SqlConnection(GlobalClass.ConnectionString))
             {
                 await con.OpenAsync();
@@ -86,7 +91,15 @@ namespace CRMWebApp.ApiControllers
                                                                ,@start_date
                                                                ,@start_time
                                                                ,@end_date
-                                                               ,@end_time)";
+                                                               ,@end_time);";
+              inserQuery += @"SELECT @event_id = scope_identity();";
+              inserQuery += @"INSERT INTO [dbo].[customerEvent]
+                                                               ([contact_id]
+                                                               ,[event_id])  
+                                                                VALUES
+                                                               (@contact_id
+                                                               ,@event_id);";
+
             using (var con = new SqlConnection(GlobalClass.ConnectionString))
             {
                 await con.OpenAsync();
@@ -97,7 +110,7 @@ namespace CRMWebApp.ApiControllers
                         int rowAffect = await con.ExecuteAsync(inserQuery, entity, trn);
                         await trn.CommitAsync();
                         if (rowAffect > 0)
-                        {
+                        {                         
                             return Ok(new { ok = true });
                         }
                         else
@@ -124,7 +137,12 @@ namespace CRMWebApp.ApiControllers
         [Route("GetById/{id}")]
         public async Task<IActionResult> GetById(string id)
         {
-            string selectedData = @"select * from [events] where event_id='" + id + "'" + "";
+            string selectedData = @"select e.*
+                                        ,ce.contact_id
+                                        ,ISNULL(c.fname,'')+' '+ISNULL(c.mname,'')+' '+ISNULL(c.lname,'') as contact_name 
+                                        from [events] e 
+                                        left join  [customerEvent] ce on e.event_id=ce.event_id
+                                        left join [contacts] c on ce.contact_id=c.contact_id where e.event_id='" + id + "'" + "";
             using (var con = new SqlConnection(GlobalClass.ConnectionString))
             {
                 await con.OpenAsync();
@@ -160,6 +178,10 @@ namespace CRMWebApp.ApiControllers
                                                           ,[start_time] = @start_time
                                                           ,[end_date] = @end_date
                                                           ,[end_time] = @end_time
+                                                     WHERE event_id=@event_id;";
+
+             updateQuery += @"UPDATE [dbo].[customerEvent]
+                                                     SET [contact_id] = contact_id                                                         
                                                      WHERE event_id=@event_id";
             using (var con = new SqlConnection(GlobalClass.ConnectionString))
             {
@@ -235,7 +257,12 @@ namespace CRMWebApp.ApiControllers
         [Route("ExportExcel")]
         public async Task<FileResult> ExportExcel()
         {
-            string selectMaterialGoods = @"SELECT * FROM [events] ORDER BY event_id Desc";
+            string selectMaterialGoods = @"select e.*
+                                        ,ce.contact_id
+                                        ,ISNULL(c.fname,'')+' '+ISNULL(c.mname,'')+' '+ISNULL(c.lname,'') as contact_name 
+                                        from [events] e 
+                                        left join  [customerEvent] ce on e.event_id=ce.event_id
+                                        left join [contacts] c on ce.contact_id=c.contact_id ORDER BY event_id Desc";
             using (var con = new SqlConnection(GlobalClass.ConnectionString))
             {
                 await con.OpenAsync();
@@ -259,14 +286,15 @@ namespace CRMWebApp.ApiControllers
                         worksheet.Cell(currentRow, 7).Value = "Start Time";
                         worksheet.Cell(currentRow, 8).Value = "End Date";
                         worksheet.Cell(currentRow, 9).Value = "End Time";
+                        worksheet.Cell(currentRow, 10).Value = "Customer";
 
-                        worksheet.Row(currentRow).Cells(1, 9).Style.Border.TopBorder = XLBorderStyleValues.Thin;
-                        worksheet.Row(currentRow).Cells(1, 9).Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                        worksheet.Row(currentRow).Cells(1, 9).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                        worksheet.Row(currentRow).Cells(1, 9).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                        worksheet.Row(currentRow).Cells(1, 10).Style.Border.TopBorder = XLBorderStyleValues.Thin;
+                        worksheet.Row(currentRow).Cells(1, 10).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                        worksheet.Row(currentRow).Cells(1, 10).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        worksheet.Row(currentRow).Cells(1, 10).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
 
-                        worksheet.Row(1).Cells(1, 9).Style.Fill.SetBackgroundColor(XLColor.Yellow);
-                        worksheet.Row(1).Cells(1, 9).Style.Font.Bold = true;
+                        worksheet.Row(1).Cells(1, 10).Style.Fill.SetBackgroundColor(XLColor.Yellow);
+                        worksheet.Row(1).Cells(1, 10).Style.Font.Bold = true;
 
                         foreach (DataRow row in table.Rows)
                         {
@@ -280,11 +308,12 @@ namespace CRMWebApp.ApiControllers
                             worksheet.Cell(currentRow, 7).Value = row["start_time"]?.ToString();
                             worksheet.Cell(currentRow, 8).Value = row["end_date"]?.ToString();
                             worksheet.Cell(currentRow, 9).Value = row["end_time"]?.ToString();
+                            worksheet.Cell(currentRow, 10).Value = row["contact_name"]?.ToString();
 
-                            worksheet.Row(currentRow).Cells(1, 9).Style.Border.TopBorder = XLBorderStyleValues.Thin;
-                            worksheet.Row(currentRow).Cells(1, 9).Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                            worksheet.Row(currentRow).Cells(1, 9).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                            worksheet.Row(currentRow).Cells(1, 9).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                            worksheet.Row(currentRow).Cells(1, 10).Style.Border.TopBorder = XLBorderStyleValues.Thin;
+                            worksheet.Row(currentRow).Cells(1, 10).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                            worksheet.Row(currentRow).Cells(1, 10).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                            worksheet.Row(currentRow).Cells(1, 10).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
 
 
                         }

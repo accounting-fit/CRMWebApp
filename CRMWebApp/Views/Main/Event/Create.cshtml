@@ -16,6 +16,13 @@
                             <input ng-model="model.topic" placeholder="" type="text" class="form-control form-control-sm" id="topic" name="topic" required />
                             <span ng-show="frm.topic.$touched && frm.topic.$invalid" style="color:red">Topic  is required.</span>
                         </div>
+                        <div class="col-4 mb-2">
+                            <label class="control-label text-sm-left text-dark font-weight-bolder" for="contact_id">Customer<span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
+                            <select ng-model="model.contact_id" class="form-control form-control-sm" id="contact_id" name="contact_id" required>
+                                <option ng-repeat="item in contact_id_list" value="{{item.id}}">{{item.text}}</option>
+                            </select>
+                            <span ng-show="frm.contact_id.$touched && frm.contact_id.$invalid" style="color:red">Customer is required.</span>
+                        </div>
 
                         <div class="col-8 mb-2">
                             <label class="control-label text-sm-left text-dark font-weight-bolder" for="type">Type <span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
@@ -24,6 +31,8 @@
                             </select>
                             <span ng-show="frm.type.$touched && frm.type.$invalid" style="color:red">Type is required.</span>
                         </div>
+
+
 
                         <div class="col-8 mb-2">
                             <label class="control-label text-sm-left text-dark font-weight-bolder" for="status">Status<span class="text-danger font-weight-bold">&nbsp;(*)</span></label>

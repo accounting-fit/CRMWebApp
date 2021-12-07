@@ -14,7 +14,10 @@ namespace CRMWebApp.Models
         public string task_name { get; set; }
         public string status { get; set; }
         public string refer_type { get; set; }
-        public string refer_name { get; set; }
+        public int? assigned_to { get; set; }
+
+        [NotMapped]
+        public string assigned_to_name { get; set; }
         public string priority { get; set; }
         public string des { get; set; }
 

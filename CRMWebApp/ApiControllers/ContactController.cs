@@ -80,6 +80,7 @@ namespace CRMWebApp.ApiControllers
                                                                ,[website]
                                                                ,[address1]
                                                                ,[address2]
+                                                               ,[type]
                                                                ,[des]
                                                                ,[other])
                                                          VALUES
@@ -92,6 +93,7 @@ namespace CRMWebApp.ApiControllers
                                                                ,@website
                                                                ,@address1
                                                                ,@address2
+                                                               ,@type
                                                                ,@des
                                                                ,@other)";
             using (var con = new SqlConnection(GlobalClass.ConnectionString))
@@ -168,6 +170,7 @@ namespace CRMWebApp.ApiControllers
                                                               ,[website] = @website
                                                               ,[address1] = @address1
                                                               ,[address2] = @address2
+                                                              ,[type] = @type
                                                               ,[des] = @des
                                                               ,[other] = @other
                                                          WHERE contact_id=@contact_id";
@@ -270,16 +273,17 @@ namespace CRMWebApp.ApiControllers
                         worksheet.Cell(currentRow, 8).Value = "Website";
                         worksheet.Cell(currentRow, 9).Value = "Primary Address";
                         worksheet.Cell(currentRow, 10).Value = "Secondary Address";
-                        worksheet.Cell(currentRow, 11).Value = "Description";
-                        worksheet.Cell(currentRow, 12).Value = "Other Information";
+                        worksheet.Cell(currentRow, 11).Value = "Type";
+                        worksheet.Cell(currentRow, 12).Value = "Description";
+                        worksheet.Cell(currentRow, 13).Value = "Other Information";
 
-                        worksheet.Row(currentRow).Cells(1, 12).Style.Border.TopBorder = XLBorderStyleValues.Thin;
-                        worksheet.Row(currentRow).Cells(1, 12).Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                        worksheet.Row(currentRow).Cells(1, 12).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                        worksheet.Row(currentRow).Cells(1, 12).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                        worksheet.Row(currentRow).Cells(1, 13).Style.Border.TopBorder = XLBorderStyleValues.Thin;
+                        worksheet.Row(currentRow).Cells(1, 13).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                        worksheet.Row(currentRow).Cells(1, 13).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        worksheet.Row(currentRow).Cells(1, 13).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
 
-                        worksheet.Row(1).Cells(1, 12).Style.Fill.SetBackgroundColor(XLColor.Yellow);
-                        worksheet.Row(1).Cells(1, 12).Style.Font.Bold = true;
+                        worksheet.Row(1).Cells(1, 13).Style.Fill.SetBackgroundColor(XLColor.Yellow);
+                        worksheet.Row(1).Cells(1, 13).Style.Font.Bold = true;
 
                         foreach (DataRow row in table.Rows)
                         {
@@ -294,13 +298,14 @@ namespace CRMWebApp.ApiControllers
                             worksheet.Cell(currentRow, 8).Value = row["website"]?.ToString();
                             worksheet.Cell(currentRow, 9).Value = row["address1"]?.ToString();
                             worksheet.Cell(currentRow, 10).Value = row["address2"]?.ToString();
-                            worksheet.Cell(currentRow, 11).Value = row["des"]?.ToString();
-                            worksheet.Cell(currentRow, 12).Value = row["other"]?.ToString();
+                            worksheet.Cell(currentRow, 11).Value =Convert.ToBoolean(row["type"])==false?"Customer":"Employeee";
+                            worksheet.Cell(currentRow, 12).Value = row["des"]?.ToString();
+                            worksheet.Cell(currentRow, 13).Value = row["other"]?.ToString();
 
-                            worksheet.Row(currentRow).Cells(1, 12).Style.Border.TopBorder = XLBorderStyleValues.Thin;
-                            worksheet.Row(currentRow).Cells(1, 12).Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                            worksheet.Row(currentRow).Cells(1, 12).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                            worksheet.Row(currentRow).Cells(1, 12).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                            worksheet.Row(currentRow).Cells(1, 13).Style.Border.TopBorder = XLBorderStyleValues.Thin;
+                            worksheet.Row(currentRow).Cells(1, 13).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                            worksheet.Row(currentRow).Cells(1, 13).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                            worksheet.Row(currentRow).Cells(1, 13).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
 
                         }
                         using (var stream = new MemoryStream())
@@ -328,6 +333,31 @@ namespace CRMWebApp.ApiControllers
 
         }
 
+        [HttpGet]
+        [Route("GetAllContacts/{type}")]
+        public async Task<IActionResult> GetAllContacts(string type)
+        {
+            string SelectedAllDataQuery = @"SELECT c.contact_id as id,ISNULL(c.fname,'')+' '+ISNULL(c.mname,'')+' '+ISNULL(c.lname,'') as text FROM  [contacts] c where c.type='" + type + "' ORDER BY c.contact_id Desc";
+            using (var con = new SqlConnection(GlobalClass.ConnectionString))
+            {
+                await con.OpenAsync();
+                try
+                {
+                    var dataList = await con.QueryAsync<dropdown>(SelectedAllDataQuery);
+
+                    return Ok(new { ok = false, GetAllContacts = dataList.ToList() });
+                }
+                catch (Exception ex)
+                {
+
+                    return BadRequest(ex);
+                }
+                finally
+                {
+                    await con.CloseAsync();
+                }
+            }
+        }
 
     }
 }

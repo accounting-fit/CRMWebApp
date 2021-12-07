@@ -125,7 +125,7 @@
             });
         }
 
-        $scope.Update = function (isClose) {
+        $scope.Update = function () {
 
             var model = $scope.model;
 

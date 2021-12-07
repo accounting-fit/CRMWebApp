@@ -11,7 +11,7 @@
                 <div class="title text-left w-100 pt-2 text-dark font-weight-bolder" align="left">Update Task</div>
                 <hr class="border-bottom-light mb-0" />
                 <div class="p-2">
-                    <div class="row">                    
+                    <div class="row">
                         <div class="col-12 mb-2">
                             <label class="control-label text-sm-left text-dark font-weight-bolder" for="task_name">Task<span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
                             <input ng-model="model.task_name" placeholder="" type="text" class="form-control form-control-sm" id="task_name" name="task_name" required />
@@ -35,9 +35,11 @@
                         </div>
 
                         <div class="col-12 mb-2">
-                            <label class="control-label text-sm-left text-dark font-weight-bolder" for="refer_name">Refer To Name <span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
-                            <input ng-model="model.refer_name" placeholder="" type="text" class="form-control form-control-sm" id="refer_name" name="refer_name" required />
-                            <span ng-show="frm.refer_name.$touched && frm.refer_name.$invalid" style="color:red">Refer To Name is required.</span>
+                            <label class="control-label text-sm-left text-dark font-weight-bolder" for="assigned_to">Assigned To<span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
+                            <select ng-model="model.assigned_to" class="form-control form-control-sm" id="assigned_to" name="assigned_to" required>
+                                <option ng-repeat="item in assigned_to_list" value="{{item.id}}">{{item.text}}</option>
+                            </select>
+                            <span ng-show="frm.assigned_to.$touched && frm.assigned_to.$invalid" style="color:red">Assigned To is required.</span>
                         </div>
 
 
