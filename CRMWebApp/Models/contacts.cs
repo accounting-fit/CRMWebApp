@@ -19,7 +19,7 @@ namespace CRMWebApp.Models
         public string website { get; set; }
         public string address1 { get; set; }
         public string address2 { get; set; }
-        public bool type { get; set; }
+        public bool? type { get; set; }
         public string des { get; set; }
         public string other { get; set; }
 
