@@ -1,5 +1,5 @@
 ﻿var array = [];
-var allCustomer = [];
+//var allCustomer = [];
 angular.module('CRMApp', []).
     controller('EventController', function ($scope, $timeout, $http, $location, $window) {
         $scope.model = {                        
@@ -121,22 +121,22 @@ angular.module('CRMApp', []).
                     $scope.model.end_date = data.singleData.end_date == null ? "" :  new Date(data.singleData.end_date);
                     $scope.model.end_time = data.singleData.end_time == null ? "" : new Date(data.singleData.end_time);
                     
-                    var savedData = data.subData;
-                    var allSelectedData = [];
-                    for (var i = 0; i < allCustomer.length; i++) {
-                        selectData = {};
-                        selectData.id = allCustomer[i].id;
-                        selectData.text = allCustomer[i].text;
-                        if (userExists(savedData, allCustomer[i].id)) {
-                            selectData.status = true;
-                        }
-                        else {
-                            selectData.status = false;
-                        }
-                        allSelectedData.push(selectData);
-                    }
+                  //var savedData = data.subData;
+                  //var allSelectedData = [];
+                  //for (var i = 0; i < allCustomer.length; i++) {
+                  //    selectData = {};
+                  //    selectData.id = allCustomer[i].id;
+                  //    selectData.text = allCustomer[i].text;
+                  //    if (userExists(savedData, allCustomer[i].id)) {
+                  //        selectData.status = true;
+                  //    }
+                  //    else {
+                  //        selectData.status = false;
+                  //    }
+                  //    allSelectedData.push(selectData);
+                  //}
 
-                    $scope.contact_id_list = allSelectedData;
+                  //$scope.contact_id_list = allSelectedData;
                 }
 
             }, function (response) {
@@ -144,11 +144,11 @@ angular.module('CRMApp', []).
             });
         }
 
-        function userExists(arr,name) {
-            return arr.some(function (el) {
-                return el.contact_id === name;
-            });
-        }
+                    //function userExists(arr,name) {
+                    //    return arr.some(function (el) {
+                    //        return el.contact_id === name;
+                    //    });
+                    //}
 
         $scope.Update = function () {
 

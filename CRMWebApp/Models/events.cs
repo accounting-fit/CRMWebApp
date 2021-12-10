@@ -21,6 +21,8 @@ namespace CRMWebApp.Models
         public string end_time { get; set; }
         [NotMapped]
         public List<int> contact_list { get; set; }
+
+       
         
 
     }

@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewData["Title"] = "Edit Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card" ng-app="CRMApp"  ng-controller="ManageCustomerController" ng-init="GetById('@ViewBag.Id')">
+
+        <div class="card-body">
+            <div class="shadow rounded">
+                <div class="col-12 pr-3 pl-3 text-right"> <a href="/ManageCustomer/Index" class="btn btn-dark" type="button"><i class="fas fa-backward"></i>&nbsp;Back Manage Customer</a></div>
+                <div class="title text-left w-100 pt-2 text-dark font-weight-bolder">Customer</div>
+
+                <hr class="border-bottom-light mb-0" />
+                <div class="p-2">
+                    <div class="row">
+                        <div class="col-2 mb-2"></div>
+                        <div class="col-8 mb-2">
+                            <table>
+                                <tr>
+                                    <td><b>Full Name:</b></td>
+                                    <td>{{model.fname==null?'':model.fname}} &nbsp; {{model.mname==null?'':model.mname}} &nbsp; {{model.lname==null?'':model.lname}} </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Mobile:</b></td>
+                                    <td>{{model.mobile}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Phone:</b></td>
+                                    <td>{{model.phone}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Email:</b></td>
+                                    <td>{{model.email}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Website:</b></td>
+                                    <td>{{model.website}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Address 1:</b></td>
+                                    <td>{{model.address1}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Adddress 2:</b></td>
+                                    <td>{{model.address2}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Des:</b></td>
+                                    <td>{{model.des}}</td>
+                                </tr>
+                            </table>
+
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12 mb-2">
+                            <div class="title text-left w-100 pt-2 text-dark font-weight-bolder">Event</div>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                    <tr>
+                                        <th>Topic</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Description</th>
+                                        <th>Start Date </th>
+                                        <th>Start Time</th>
+                                        <th>End Date</th>
+                                        <th>End Time</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody style="background-color:white;">
+                                    <tr ng-repeat="item in subDataList">
+                                        <td>
+                                            <span class="table-data-font">{{item.topic}}</span><br />
+                                        </td>
+                                        <td>
+                                            <span class="table-data-font">{{item.type}}</span><br />
+                                        </td>
+                                        <td>
+                                            <span class="table-data-font">{{item.status}}</span><br />
+                                        </td>
+                                        <td>
+                                            <span class="table-data-font">{{item.des}}</span><br />
+                                        </td>
+                                        <td>
+                                            <span class="table-data-font">{{item.start_date | date: 'dd/MMM/yyyy'}}</span><br />
+                                        </td>
+                                        <td>
+                                            <span class="table-data-font">{{item.start_time | date: 'HH:mm a'}}</span><br />
+                                        </td>
+                                        <td>
+                                            <span class="table-data-font">{{item.end_date | date: 'dd/MMM/yyyy'}}</span><br />
+                                        </td>
+                                        <td>
+                                            <span class="table-data-font">{{item.end_time | date: 'HH:mm a'}}</span><br />
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+                            <div class="col-12 pr-3 pl-3 text-right"> <a href="/ManageCustomer/CreateEvent/{{model.contact_id}}" class="btn btn-success" type="button"><i class="fas fa-plus-circle"></i>&nbsp;Add New</a></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 mb-2">
+                            <div class="title text-left w-100 pt-2 text-dark font-weight-bolder">Support</div>
+
+                            <div class="col-12 pr-3 pl-3 text-right"> <a href="/" class="btn btn-success" type="button"><i class="fas fa-plus-circle"></i>&nbsp;Add New</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+</div>
+</div>
+
+<script src="~/lib/angular.js/angular.js"></script>
+    <script src="~/js/angularservices/managecustomerservice.js"></script>
+

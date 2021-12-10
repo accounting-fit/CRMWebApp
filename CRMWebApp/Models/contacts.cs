@@ -23,5 +23,7 @@ namespace CRMWebApp.Models
         public string des { get; set; }
         public string other { get; set; }
 
+        public bool? issupported { get; set; }
+
     }
 }

@@ -10,26 +10,27 @@ namespace CRMWebApp.Controllers
     {
         public IActionResult Index()
         {
-            return View("/Views/Main/Contact/Index.cshtml");
+            return View("/Views/Main/Manage/ManageCustomer/Index.cshtml");
         }
 
-        public IActionResult Create()
+        public IActionResult CreateEvent(string id)
         {
-            return View("/Views/Main/Contact/Create.cshtml");
+            ViewBag.Id = id;
+            return View("/Views/Main/Manage/ManageCustomer/CreateEvent.cshtml");
         }
 
         public IActionResult Edit(string id)
         {
             ViewData["Action"] = "Edit Contact";
             ViewBag.Id = id;
-            return View("/Views/Main/Contact/Edit.cshtml");
+            return View("/Views/Main/Manage/ManageCustomer/Edit.cshtml");
         }
 
         public IActionResult Delete(string id)
         {
             ViewData["Action"] = "Delete Contact";
             ViewBag.Id = id;
-            return View("/Views/Main/Contact/Delete.cshtml");
+            return View("/Views/Main/Manage/ManageCustomer/Delete.cshtml");
         }
     }
 }
