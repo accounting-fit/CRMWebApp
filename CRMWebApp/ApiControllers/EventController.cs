@@ -40,12 +40,7 @@ namespace CRMWebApp.ApiControllers
         [Route("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            string SelectedAllDataQuery = @"select e.*
-                                        ,ce.contact_id
-                                        ,ISNULL(c.fname,'')+' '+ISNULL(c.mname,'')+' '+ISNULL(c.lname,'') as contact_name 
-                                        from [events] e 
-                                        left join  [customerEvent] ce on e.event_id=ce.event_id
-                                        left join [contacts] c on ce.contact_id=c.contact_id ORDER BY event_id Desc";
+            string SelectedAllDataQuery = @"select * from [events]  ORDER BY event_id Desc";
             using (var con = new SqlConnection(GlobalClass.ConnectionString))
             {
                 await con.OpenAsync();
@@ -92,13 +87,19 @@ namespace CRMWebApp.ApiControllers
                                                                ,@start_time
                                                                ,@end_date
                                                                ,@end_time);";
-              inserQuery += @"SELECT @event_id = scope_identity();";
-              inserQuery += @"INSERT INTO [dbo].[customerEvent]
-                                                               ([contact_id]
-                                                               ,[event_id])  
-                                                                VALUES
-                                                               (@contact_id
-                                                               ,@event_id);";
+                inserQuery += @"SELECT @event_id = scope_identity();";
+            if (entity.contact_list.Any())
+            {
+                foreach (var item in entity.contact_list)
+                {
+                    inserQuery += @"INSERT INTO [dbo].[customerEvent]
+                                                                    ([contact_id]
+                                                                    ,[event_id])  
+                                                                    VALUES
+                                                                    ('" + item + "'"
+                                                                    + ",@event_id);";
+                }
+            }
 
             using (var con = new SqlConnection(GlobalClass.ConnectionString))
             {
@@ -137,19 +138,16 @@ namespace CRMWebApp.ApiControllers
         [Route("GetById/{id}")]
         public async Task<IActionResult> GetById(string id)
         {
-            string selectedData = @"select e.*
-                                        ,ce.contact_id
-                                        ,ISNULL(c.fname,'')+' '+ISNULL(c.mname,'')+' '+ISNULL(c.lname,'') as contact_name 
-                                        from [events] e 
-                                        left join  [customerEvent] ce on e.event_id=ce.event_id
-                                        left join [contacts] c on ce.contact_id=c.contact_id where e.event_id='" + id + "'" + "";
+            string selectedData = @"select * from [events] where event_id='" + id + "'" + "";
+            string subSelectedData= @"select * from [customerEvent] where event_id='" + id + "'" + "";
             using (var con = new SqlConnection(GlobalClass.ConnectionString))
             {
                 await con.OpenAsync();
                 try
                 {
                     var singleData = await con.QueryAsync<events>(selectedData);
-                    return Ok(new { ok = false, SingleData = singleData.FirstOrDefault() });
+                    var subData = await con.QueryAsync<customerevent>(subSelectedData);
+                    return Ok(new { ok = false, SingleData = singleData.FirstOrDefault(),SubData= subData.ToList() });
                 }
                 catch (Exception ex)
                 {
@@ -180,9 +178,22 @@ namespace CRMWebApp.ApiControllers
                                                           ,[end_time] = @end_time
                                                      WHERE event_id=@event_id;";
 
-             updateQuery += @"UPDATE [dbo].[customerEvent]
-                                                     SET [contact_id] = @contact_id                                                         
-                                                     WHERE event_id=@event_id";
+           
+
+            if (entity.contact_list.Any())
+            {
+                updateQuery += @"Delete  [dbo].[customerEvent] where event_id='" + entity.event_id + "'" + "";
+                foreach (var item in entity.contact_list)
+                {
+                    updateQuery += @"INSERT INTO [dbo].[customerEvent]
+                                                                    ([contact_id]
+                                                                    ,[event_id])  
+                                                                    VALUES
+                                                                    ('" + item + "'"
+                                                                    + ",@event_id);";
+                }
+            }
+            
             using (var con = new SqlConnection(GlobalClass.ConnectionString))
             {
                 await con.OpenAsync();
@@ -257,12 +268,7 @@ namespace CRMWebApp.ApiControllers
         [Route("ExportExcel")]
         public async Task<FileResult> ExportExcel()
         {
-            string selectMaterialGoods = @"select e.*
-                                        ,ce.contact_id
-                                        ,ISNULL(c.fname,'')+' '+ISNULL(c.mname,'')+' '+ISNULL(c.lname,'') as contact_name 
-                                        from [events] e 
-                                        left join  [customerEvent] ce on e.event_id=ce.event_id
-                                        left join [contacts] c on ce.contact_id=c.contact_id ORDER BY event_id Desc";
+            string selectMaterialGoods = @"select * from [events] ORDER BY event_id Desc";
             using (var con = new SqlConnection(GlobalClass.ConnectionString))
             {
                 await con.OpenAsync();
@@ -285,13 +291,12 @@ namespace CRMWebApp.ApiControllers
                         worksheet.Cell(currentRow, 6).Value = "Start Date";
                         worksheet.Cell(currentRow, 7).Value = "Start Time";
                         worksheet.Cell(currentRow, 8).Value = "End Date";
-                        worksheet.Cell(currentRow, 9).Value = "End Time";
-                        worksheet.Cell(currentRow, 10).Value = "Customer";
+                        worksheet.Cell(currentRow, 9).Value = "End Time";                       
 
-                        worksheet.Row(currentRow).Cells(1, 10).Style.Border.TopBorder = XLBorderStyleValues.Thin;
-                        worksheet.Row(currentRow).Cells(1, 10).Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                        worksheet.Row(currentRow).Cells(1, 10).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                        worksheet.Row(currentRow).Cells(1, 10).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                        worksheet.Row(currentRow).Cells(1, 9).Style.Border.TopBorder = XLBorderStyleValues.Thin;
+                        worksheet.Row(currentRow).Cells(1, 9).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                        worksheet.Row(currentRow).Cells(1, 9).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        worksheet.Row(currentRow).Cells(1, 9).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
 
                         worksheet.Row(1).Cells(1, 10).Style.Fill.SetBackgroundColor(XLColor.Yellow);
                         worksheet.Row(1).Cells(1, 10).Style.Font.Bold = true;
@@ -307,13 +312,12 @@ namespace CRMWebApp.ApiControllers
                             worksheet.Cell(currentRow, 6).Value = row["start_date"]?.ToString();
                             worksheet.Cell(currentRow, 7).Value = row["start_time"]?.ToString();
                             worksheet.Cell(currentRow, 8).Value = row["end_date"]?.ToString();
-                            worksheet.Cell(currentRow, 9).Value = row["end_time"]?.ToString();
-                            worksheet.Cell(currentRow, 10).Value = row["contact_name"]?.ToString();
+                            worksheet.Cell(currentRow, 9).Value = row["end_time"]?.ToString();                        
 
-                            worksheet.Row(currentRow).Cells(1, 10).Style.Border.TopBorder = XLBorderStyleValues.Thin;
-                            worksheet.Row(currentRow).Cells(1, 10).Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                            worksheet.Row(currentRow).Cells(1, 10).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                            worksheet.Row(currentRow).Cells(1, 10).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                            worksheet.Row(currentRow).Cells(1, 9).Style.Border.TopBorder = XLBorderStyleValues.Thin;
+                            worksheet.Row(currentRow).Cells(1, 9).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                            worksheet.Row(currentRow).Cells(1, 9).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                            worksheet.Row(currentRow).Cells(1, 9).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
 
 
                         }

@@ -17,12 +17,51 @@
                             <span ng-show="frm.topic.$touched && frm.topic.$invalid" style="color:red">Topic  is required.</span>
                         </div>
                         <div class="col-4 mb-2">
-                            <label class="control-label text-sm-left text-dark font-weight-bolder" for="contact_id">Customer<span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
-                            <select ng-model="model.contact_id" class="form-control form-control-sm" id="contact_id" name="contact_id"  required>
-                                <option ng-repeat="item in contact_id_list" value="{{item.id}}">{{item.text}}</option>
-                            </select>
-                            <span ng-show="frm.contact_id.$touched && frm.contact_id.$invalid" style="color:red">Customer is required.</span>
+
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addCustomer" id="addCustomerButton">Add Customer</button>
                         </div>
+
+
+                        <div class="modal fade" id="addCustomer" tabindex="-1" role="dialog" aria-labelledby="addCustomerLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addCustomerLabel">Customer List</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th><input type="checkbox" ng-model="all">&nbsp; All</th>
+                                                        <th>Full Name</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="background-color:white;">
+                                                    <tr ng-repeat="item in contact_id_list">
+                                                        <td>
+                                                            <input type="checkbox" id="{{item.id}}" ng-model="selectedList[item.id]" ng-checked="all" /> 
+                                                        </td>
+                                                        <td>
+                                                            <span class="table-data-font">{{item.text}}</span>                                                           
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" ng-click="btnSaveCustomer()" data-dismiss="modal" id="btnSaveCustomer" name="btnSaveCustomer"> <i class="fas fa-save"></i>&nbsp;Save </button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> &nbsp;Exit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div class="col-8 mb-2">
                             <label class="control-label text-sm-left text-dark font-weight-bolder" for="type">Type <span class="text-danger font-weight-bold">&nbsp;(*)</span></label>

@@ -1,4 +1,6 @@
-﻿angular.module('CRMApp', []).
+﻿var array = [];
+var allCustomer = [];
+angular.module('CRMApp', []).
     controller('EventController', function ($scope, $timeout, $http, $location, $window) {
         $scope.model = {                        
         };       
@@ -23,6 +25,7 @@
                     var data = response.data;
                     debugger;
                     $scope.contact_id_list = data.getAllContacts;
+                    allCustomer = data.getAllContacts;
                 }
 
             }, function (response) {
@@ -69,7 +72,7 @@
         $scope.Save = function (isClose) {
 
             var model = $scope.model;
-
+            model.contact_list = array;
             var url = '/Api/Event/Save';
             $http({
                 method: 'POST',
@@ -109,15 +112,31 @@
                 if (response.status === 200) {
                     var data = response.data;
                     $scope.model.event_id = data.singleData.event_id;
-                    $scope.model.topic = data.singleData.topic;
-                    $scope.model.contact_id = (data.singleData.contact_id).toString();
+                    $scope.model.topic = data.singleData.topic;                 
                     $scope.model.type = data.singleData.type;
                     $scope.model.status = data.singleData.status;
                     $scope.model.des = data.singleData.des;
                     $scope.model.start_date = data.singleData.start_date == null ? "": new Date(data.singleData.start_date);
                     $scope.model.start_time = data.singleData.start_time == null ? "" :  new Date(data.singleData.start_time);
                     $scope.model.end_date = data.singleData.end_date == null ? "" :  new Date(data.singleData.end_date);
-                    $scope.model.end_time = data.singleData.end_time == null ? "" :  new Date(data.singleData.end_time);
+                    $scope.model.end_time = data.singleData.end_time == null ? "" : new Date(data.singleData.end_time);
+                    
+                    var savedData = data.subData;
+                    var allSelectedData = [];
+                    for (var i = 0; i < allCustomer.length; i++) {
+                        selectData = {};
+                        selectData.id = allCustomer[i].id;
+                        selectData.text = allCustomer[i].text;
+                        if (userExists(savedData, allCustomer[i].id)) {
+                            selectData.status = true;
+                        }
+                        else {
+                            selectData.status = false;
+                        }
+                        allSelectedData.push(selectData);
+                    }
+
+                    $scope.contact_id_list = allSelectedData;
                 }
 
             }, function (response) {
@@ -125,10 +144,16 @@
             });
         }
 
+        function userExists(arr,name) {
+            return arr.some(function (el) {
+                return el.contact_id === name;
+            });
+        }
+
         $scope.Update = function () {
 
             var model = $scope.model;
-
+            model.contact_list = array;
             var url = '/Api/Event/Update';
             $http({
                 method: 'POST',
@@ -189,5 +214,17 @@
         $scope.ExportToExcel = function () {
             var url = '/Api/Event/ExportExcel';
             window.open(url, '_blank');
+        }
+
+        $scope.selectedList=[];
+                
+        $scope.btnSaveCustomer = function () {
+            array = [];
+            angular.forEach($scope.selectedList, function (selected, item) {
+                if (selected) {                  
+                    array.push(parseInt(item));                  
+                }
+            });           
+
         }
     });
