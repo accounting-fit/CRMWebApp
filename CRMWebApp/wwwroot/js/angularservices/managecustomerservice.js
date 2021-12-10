@@ -3,8 +3,6 @@
         $scope.model = {                        
         };
 
-           
-
         $scope.AllClear = function () {
             $scope.model = {
                             
@@ -28,42 +26,7 @@
             }, function (response) {
                 console.log(response);
             });
-        }
-
-        $scope.Save = function (isClose) {
-
-            var model = $scope.model;
-            model.type = model.type == 'true'? true:false;
-
-            var url = '/Api/Contact/Save';
-            $http({
-                method: 'POST',
-                url: url,
-                data: model
-            }).then(function (response) {
-                if (response.status === 200) {
-                    if (response.data.ok) {
-                        $scope.AllClear();
-                        alert("Save Successfully")
-                        if (isClose === 1) {
-                            window.location.href = "/Contact/Index";
-                        }
-                        else {
-                            window.location.href = "/Contact/Create";
-                        }
-                    } else {
-                        console.log(response);
-                        alert("Save Failed")
-                    }
-                } else {
-                    console.log(response);
-                    alert("Something  wrong")
-                }
-
-            }, function (response) {
-                console.log(response);
-            });
-        }
+        }     
 
 
         $scope.GetById = function (id) {
@@ -96,79 +59,6 @@
             });
         }
 
-        $scope.Update = function () {
-
-            var model = $scope.model;
-            model.type = model.type == 'true' ? true : false;
-
-            var url = '/Api/Contact/Update';
-            $http({
-                method: 'POST',
-                url: url,
-                data: model
-            }).then(function (response) {
-                if (response.status === 200) {
-                    if (response.data.ok) {
-                        $scope.AllClear();
-                        alert("Update Successfully")
-                        window.location.href = "/Contact/Index";
-                    }
-                    else {
-                        console.log(response);
-                        alert("Update Failed")
-                    }
-                } else {
-                    console.log(response);
-                    alert("Something  wrong")
-                }
-
-            }, function (response) {
-                console.log(response);
-            });
-        }
-
-
-
-
-        $scope.DeleteById = function (id) {
-            debugger;
-
-            var url = '/Api/Contact/DeleteById/' + id;
-            $http({
-                method: 'POST',
-                url: url
-            }).then(function (response) {
-                if (response.status === 200) {
-                    if (response.data.ok) {
-                        $scope.AllClear();
-                        alert("Delete Successfully")
-                        window.location.href = "/Contact/Index";
-
-                    } else {
-                        console.log(response);
-                        alert("Delete Failed")
-                    }
-                } else {
-                    console.log(response);
-                    alert("Something  wrong")
-                }
-
-            }, function (response) {
-                console.log(response);
-            });
-        }
-
-        $scope.ExportToExcel = function () {
-            var url = '/Api/Contact/ExportExcel';
-            window.open(url, '_blank');
-        }
-
-
-
-        /////////
-
-
-        
 
         function GetAllContacts(type, idValue) {
             debugger;

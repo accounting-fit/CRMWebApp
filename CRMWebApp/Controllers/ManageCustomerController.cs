@@ -26,11 +26,6 @@ namespace CRMWebApp.Controllers
             return View("/Views/Main/Manage/ManageCustomer/Edit.cshtml");
         }
 
-        public IActionResult Delete(string id)
-        {
-            ViewData["Action"] = "Delete Contact";
-            ViewBag.Id = id;
-            return View("/Views/Main/Manage/ManageCustomer/Delete.cshtml");
-        }
+       
     }
 }
