@@ -1,4 +1,6 @@
-﻿angular.module('CRMApp', []).
+﻿var global_contact_id = '';
+var global_support_id = '';
+angular.module('CRMApp', []).
     controller('ManageCustomerController', function ($scope, $timeout, $http, $location, $window) {
         $scope.model = {                        
         };
@@ -52,6 +54,9 @@
                     $scope.model.des = data.singleData.des
                     $scope.model.other = data.singleData.other
                     $scope.subDataList = data.subDataList;
+                    $scope.supportDataList = data.childData;
+                    global_contact_id = id;
+                    global_support_id = data.childData==null?'': data.childData.support_id;
                 }
 
             }, function (response) {
@@ -132,4 +137,62 @@
                 console.log(response);
             });
         }
+
+
+        $scope.addSupporterButton = function () {
+            GetAllEmployeees('1');
+           
+
+        }
+
+        function GetAllEmployeees(type) {
+            var url = '/Api/Contact/GetAllContacts/' + type;
+            $http({
+                method: 'GET',
+                url: url,
+            }).then(function (response) {
+                console.log(response);
+                if (response.status === 200) {
+                    var data = response.data;  
+                    $scope.support_id_list = data.getAllContacts;
+                    $scope.support_id = global_support_id == null ? '':global_support_id.toString();
+                   
+                   
+                }
+
+            }, function (response) {
+                console.log(response);
+            });
+        }
+
+        $scope.btnSaveSupport = function () {
+            var model = {};
+            model.support_id = $scope.support_id;
+            model.contact_id = global_contact_id;
+            debugger;
+            var url = '/Api/ManageCustomer/SaveSupport';
+            $http({
+                method: 'POST',
+                url: url,
+                data: model
+            }).then(function (response) {
+                if (response.status === 200) {
+                    if (response.data.ok) {
+                        $scope.AllClear();
+                        alert("Save Successfully")
+                        window.location.href = "/ManageCustomer/Edit/" + model.contact_id;
+                    } else {
+                        console.log(response);
+                        alert("Save Failed")
+                    }
+                } else {
+                    console.log(response);
+                    alert("Something  wrong")
+                }
+
+            }, function (response) {
+                console.log(response);
+            });
+        }
+
     });

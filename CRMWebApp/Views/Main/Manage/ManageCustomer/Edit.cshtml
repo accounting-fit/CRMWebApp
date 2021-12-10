@@ -103,17 +103,46 @@
                                 </tbody>
 
                             </table>
-                            <div class="col-12 pr-3 pl-3 text-right"> <a href="/ManageCustomer/CreateEvent/{{model.contact_id}}" class="btn btn-success" type="button"><i class="fas fa-plus-circle"></i>&nbsp;Add New</a></div>
+                            <div class="col-12 pr-3 pl-3 text-right"> <a href="/ManageCustomer/CreateEvent/{{model.contact_id}}" class="btn btn-success" type="button"><i class="fas fa-plus-circle"></i>&nbsp;Add Event</a></div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-12 mb-2">
-                            <div class="title text-left w-100 pt-2 text-dark font-weight-bolder">Support</div>
+                            <div class="title text-left w-100 pt-2 text-dark font-weight-bolder">Supporter</div>
+                            <div><b>{{supportDataList.supportername}}</b></div>
 
-                            <div class="col-12 pr-3 pl-3 text-right"> <a href="/" class="btn btn-success" type="button"><i class="fas fa-plus-circle"></i>&nbsp;Add New</a></div>
+
+                            <div class="modal fade" id="addSupporter" tabindex="-1" role="dialog" aria-labelledby="addSupporterLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="addSupporterLabel">Add Support</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="col-8 mb-2">
+                                                <label class="control-label text-sm-left text-dark font-weight-bolder" for="support_id">Supporter</label>
+                                                <select ng-model="support_id" class="form-control form-control-sm" id="support_id" name="support_id">
+                                                    <option ng-repeat="item in support_id_list" value="{{item.id}}">{{item.text}}</option>
+                                                </select>
+                                                
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" ng-click="btnSaveSupport()" data-dismiss="modal" id="btnSaveSupport" name="btnSaveSupport"> <i class="fas fa-save"></i>&nbsp;Save &Exist </button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> &nbsp;Exit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 pr-3 pl-3 text-right">
+                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addSupporter" ng-click="addSupporterButton()" id="addSupporterButton"><i class="fas fa-plus-circle"></i>&nbsp;Add Supporter</button>
+                            </div>
                         </div>
-                    </div>
                 </div>
             </div>
 

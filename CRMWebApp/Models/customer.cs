@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace CRMWebApp.Models
 {
-    [Table("customers")]
-    public class customer
+    [Table("customerEvent")]
+    public class customerevent
     {
         public int contact_id { get; set; }
-        public int support_id { get; set; }
-        public string supportername { get; set; }
+        public int event_id { get; set; }
     }
-    
 }
