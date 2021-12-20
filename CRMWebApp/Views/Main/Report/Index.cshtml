@@ -1,0 +1,323 @@
+﻿@{
+    ViewData["Title"] = "Report List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<div class="card" ng-app="CRMApp" ng-controller="ReportController">
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Report</h1>
+        <form name="frm">
+            <div class="col-6 mb-2">
+                <label class="control-label text-sm-left text-dark font-weight-bolder" for="reportName">Report Name<span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
+                <select ng-model="model.reportName" class="form-control form-control-sm" id="reportName" name="reportName" ng-change="GetReport()" required>
+                    <option ng-repeat="item in reportNameList" value="{{item.id}}">{{item.text}}</option>
+                </select>
+                <span ng-show="frm.reportName.$touched && frm.reportName.$invalid" style="color:red">Report Nmae is required.</span>
+            </div>
+        </form>
+    </div>
+
+    <div class="container-fluid px-4" id="contactDiv" ng-show="IsVisibleContact">
+        <button title="Export To Excel" ng-click="ExportToExcel('#contact')" class="btn btn-primary" type="button"><i class="fas fa-file-excel"></i>&nbsp;Export Excel</button>
+        <button title="Export To Excel" ng-click="ExportToPdf('contact')" class="btn btn-success" type="button"><i class="fas fa-file-pdf"></i>&nbsp;Export PDF</button>
+        <br />
+        <br />
+        <div class="table-responsive">
+            <table class="table table-sm" id="contact">
+          
+
+                <thead style="text-align:center">
+                    <tr>
+                        <th colspan="12" >Customer Relationship Management</th>
+                    </tr>
+                    <tr>
+                        <th colspan="12">Report : Contact</th>
+                    </tr>
+                </thead>
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Middle Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Phone</th>
+                        <th>Website</th>
+                        <th>Primary Address</th>
+                        <th>Secondary Address</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Other Information</th>
+                    </tr>
+                </thead>
+                <tbody style="background-color:white;">
+                    <tr ng-repeat="item in AllDataList">
+                        <td>
+                            <span class="table-data-font">{{item.fname}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.lname}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.mname}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.email}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.mobile}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.phone}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.website}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.address1}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.address2}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.type==false?'Customer':'Employee'}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.des}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.other}}</span><br />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="container-fluid px-4" id="taskDiv" ng-show="IsVisibleTask">
+        <button title="Export To Excel" ng-click="ExportToExcel('#task')" class="btn btn-primary" type="button"><i class="fas fa-file-excel"></i>&nbsp;Export Excel</button>
+        <button title="Export To Excel" ng-click="ExportToPdf('task')" class="btn btn-success" type="button"><i class="fas fa-file-pdf"></i>&nbsp;Export PDF</button>
+        <br />
+        <br />
+        <div class="table-responsive">
+            <table class="table table-sm" id="task">
+                <thead style="text-align:center">
+                    <tr>
+                        <th colspan="6">Customer Relationship Management</th>
+                    </tr>
+                    <tr>
+                        <th colspan="6">Report : Task</th>
+                    </tr>
+                </thead>
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Status</th>
+                        <th>Refer To Type</th>
+                        <th>Assigned To</th>
+                        <th>Priority</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody style="background-color:white;">
+                    <tr ng-repeat="item in AllDataList">
+                        <td>
+                            <span class="table-data-font">{{item.task_name}} </span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.status}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.refer_type}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.assigned_to_name}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.priority}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.des}}</span><br />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="container-fluid px-4" id="taskDiv" ng-show="IsVisibleEvent">
+        <button title="Export To Excel" ng-click="ExportToExcel('#event')" class="btn btn-primary" type="button"><i class="fas fa-file-excel"></i>&nbsp;Export Excel</button>
+        <button title="Export To Excel" ng-click="ExportToPdf('event')" class="btn btn-success" type="button"><i class="fas fa-file-pdf"></i>&nbsp;Export PDF</button>
+        <br />
+        <br />
+        <div class="table-responsive">
+            <table class="table table-sm" id="event">
+                <thead style="text-align:center">
+                    <tr>
+                        <th colspan="8">Customer Relationship Management</th>
+                    </tr>
+                    <tr>
+                        <th colspan="8">Report : Event</th>
+                    </tr>
+                </thead>
+                <thead>
+                    <tr>
+                        <th>Topic</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                        <th>Start Date </th>
+                        <th>Start Time</th>
+                        <th>End Date</th>
+                        <th>End Time</th>
+                    </tr>
+                </thead>
+                <tbody style="background-color:white;">
+                    <tr ng-repeat="item in AllDataList">
+                        <td>
+                            <span class="table-data-font">{{item.topic}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.type}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.status}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.des}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.start_date | date: 'dd/MMM/yyyy'}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.start_time | date: 'HH:mm a'}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.end_date | date: 'dd/MMM/yyyy'}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.end_time | date: 'HH:mm a'}}</span><br />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="container-fluid px-4" id="taskDiv" ng-show="IsVisibleLead">
+        <button title="Export To Excel" ng-click="ExportToExcel('#lead')" class="btn btn-primary" type="button"><i class="fas fa-file-excel"></i>&nbsp;Export Excel</button>
+        <button title="Export To Excel" ng-click="ExportToPdf('lead')" class="btn btn-success" type="button"><i class="fas fa-file-pdf"></i>&nbsp;Export PDF</button>
+        <br />
+        <br />
+        <div class="table-responsive" style="font-size:8px">
+            <table class="table table-sm" id="lead">
+                <thead style="text-align:center">
+                    <tr>
+                        <th colspan="20">Customer Relationship Management</th>
+                    </tr>
+                    <tr>
+                        <th colspan="20">Report : Lead</th>
+                    </tr>
+                </thead>
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Middle Name</th>
+                        <th>Sales Person</th>
+                        <th>Department</th>
+                        <th>Company</th>
+                        <th>Industry</th>
+                        <th>Lead Source</th>
+                        <th>Lead Status</th>
+                        <th>No of Employees</th>
+                        <th>Revenue</th>
+                        <th>Description</th>
+                        <th>Referred By</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Phone</th>
+                        <th>Website</th>
+                        <th>Address1</th>
+                        <th>Address2</th>
+                        <th>Other</th>
+                    </tr>
+                </thead>
+                <tbody style="background-color:white;">
+                    <tr ng-repeat="item in AllDataList">
+                        <td>
+                            <span class="table-data-font">{{item.fname}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.lname}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.mname}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.fname}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.dep}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.comp}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.industry}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.lead_source}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.lead_status}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.no_empl}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.revenue}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.des}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.referred}}</span><br />
+                        </td>
+
+                        <td>
+                            <span class="table-data-font">{{item.email}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.mobile}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.phone}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.website}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.address1}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.address2}}</span><br />
+                        </td>
+                        <td>
+                            <span class="table-data-font">{{item.other}}</span><br />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/angular.js/angular.js"></script>
+<script src="~/js/angularservices/reportservice.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+
+
