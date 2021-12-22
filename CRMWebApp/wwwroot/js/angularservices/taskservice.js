@@ -78,7 +78,7 @@
             }).then(function (response) {
                 if (response.status === 200) {
                     if (response.data.ok) {
-                        $scope.AllClear();
+                        //$scope.AllClear();
                         alert("Save Successfully")
                         if (isClose === 1) {
                             window.location.href = "/Task/Index";
@@ -135,7 +135,7 @@
             }).then(function (response) {
                 if (response.status === 200) {
                     if (response.data.ok) {
-                        $scope.AllClear();
+                        //$scope.AllClear();
                         alert("Update Successfully")                       
                             window.location.href = "/Task/Index";                    
                         }

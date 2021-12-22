@@ -24,9 +24,9 @@
                 data: model
             }).then(function (response) {
                 if (response.status === 200) {                
-                    alert(response.data.message);
+                    //alert(response.data.message);
                     window.location.href = "/Home/Index";
-                    $scope.AllClear();
+                    //$scope.AllClear();
                 }
             }, function (response) {
                 console.log(response);

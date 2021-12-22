@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="col-12 mb-2">
                                     <label class="control-label text-sm-left text-dark font-weight-bolder" for="type">Type<span class="text-danger font-weight-bold">&nbsp;(*)</span></label>
-                                    <select ng-model="model.type" class="form-control form-control-sm" id="type" name="type" required>
+                                    <select ng-model="model.type" class="form-control form-control-sm" id="type" name="type" required disabled>
                                         <option ng-repeat="item in typeList" value="{{item.id}}">{{item.text}}</option>
                                     </select>
                                     <span ng-show="frm.type.$touched && frm.type.$invalid" style="color:red">Type is required.</span>

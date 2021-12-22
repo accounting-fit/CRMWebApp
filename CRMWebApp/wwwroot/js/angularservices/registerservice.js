@@ -35,7 +35,7 @@
                 if (response.status === 200) {                
                     alert(response.data.message);
                     window.location.href = "/Authentication/Login";
-                    $scope.AllClear();
+                    //$scope.AllClear();
                 }
             }, function (response) {
                 console.log(response);
